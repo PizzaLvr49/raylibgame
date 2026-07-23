@@ -428,12 +428,15 @@ int main()
         GREEN); });
 
 #ifdef __INTELLISENSE__
-    const char flecs_script[] = {0};
+    constexpr static char flecs_script[] = {0};
 #else
-    const char flecs_script[] = {
-#embed "assets/game.flecs"
+    constexpr static char flecs_script[] = {
+#embed "assets/game.flecs", 0
     };
 #endif
+
+    static_assert(flecs_script[sizeof(flecs_script) - 1] == 0,
+                  "not null terminated");
 
     world.script_run("game.flecs", flecs_script);
 
