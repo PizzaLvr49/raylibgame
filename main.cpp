@@ -427,9 +427,13 @@ int main()
         5,
         GREEN); });
 
-    constexpr const char flecs_script[] = {
+#ifdef __INTELLISENSE__
+    const char flecs_script[] = {0};
+#else
+    const char flecs_script[] = {
 #embed "assets/game.flecs"
-        , 0};
+    };
+#endif
 
     world.script_run("game.flecs", flecs_script);
 
