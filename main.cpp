@@ -53,6 +53,7 @@ struct GameState
 {
     bool gameOver;
     bool gameWon;
+    bool started;
 };
 
 int main()
@@ -96,7 +97,7 @@ int main()
 
     world.set<Input>({0.f, 0.f});
 
-    world.set<GameState>({false, false});
+    world.set<GameState>({false, false, false});
 
     world.system<Input>()
         .kind(flecs::PreUpdate)
@@ -267,7 +268,7 @@ int main()
              {
         auto state = &world.get_mut<GameState>();
 
-        if (state->gameOver || state->gameWon)
+        if (!state->started || state->gameOver || state->gameWon)
             return;
 
         bool hasEnemies = false;
@@ -427,6 +428,8 @@ int main()
         GREEN); });
 
     world.script_run_file("assets/game.flecs");
+
+    world.get_mut<GameState>().started = true;
 
     while (!WindowShouldClose())
     {
