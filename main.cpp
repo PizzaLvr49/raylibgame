@@ -58,7 +58,7 @@ struct GameState
 
 int main()
 {
-    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
 
     InitWindow(1920, 1080, "game");
 
@@ -427,7 +427,11 @@ int main()
         5,
         GREEN); });
 
-    world.script_run_file("assets/game.flecs");
+    constexpr const char flecs_script[] = {
+#embed "assets/game.flecs"
+        , 0};
+
+    world.script_run("game.flecs", flecs_script);
 
     world.get_mut<GameState>().started = true;
 
