@@ -1,0 +1,1 @@
+gcc -O3 -x c -std=c99 -c ./include/flecs.c -I ./include -o ./build/flecs.o && g++ -std=c++26 -Wall -mwindows -g main.cpp build/flecs.o -I include include/libraylib.a -lopengl32 -lgdi32 -lwinmm -lws2_32 -ldbghelp -O3 -o build/game.exe

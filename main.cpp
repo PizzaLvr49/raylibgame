@@ -431,7 +431,7 @@ int main()
     constexpr static char flecs_script[] = {0};
 #else
     constexpr static char flecs_script[] = {
-#embed "assets/game.flecs", 0
+#embed "assets/game.flecs" suffix(, 0)
     };
 #endif
 
