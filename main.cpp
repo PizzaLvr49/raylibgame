@@ -26,6 +26,7 @@ struct Character
 {
     float speed;
     float health;
+    float maxHealth;
 };
 
 struct Player
@@ -51,6 +52,7 @@ struct Input
 struct GameState
 {
     bool gameOver;
+    bool gameWon;
 };
 
 int main()
@@ -82,7 +84,8 @@ int main()
 
     world.component<Character>()
         .member<float>("speed")
-        .member<float>("health");
+        .member<float>("health")
+        .member<float>("maxHealth");
 
     world.component<Bullet>()
         .member<float>("damage")
@@ -93,7 +96,7 @@ int main()
 
     world.set<Input>({0.f, 0.f});
 
-    world.set<GameState>({false});
+    world.set<GameState>({false, false});
 
     world.system<Input>()
         .kind(flecs::PreUpdate)
@@ -258,6 +261,27 @@ int main()
                 }
             } });
 
+    world.system<>()
+        .kind(flecs::PostUpdate)
+        .run([&](flecs::iter &it)
+             {
+        auto state = &world.get_mut<GameState>();
+
+        if (state->gameOver || state->gameWon)
+            return;
+
+        bool hasEnemies = false;
+
+        world.query<const Enemy>().each([&](flecs::entity, const Enemy&)
+        {
+            hasEnemies = true;
+        });
+
+        if (!hasEnemies)
+        {
+            state->gameWon = true;
+        } });
+
     world.system<Position, const CircleRenderer>()
         .without<Bullet>()
         .kind(flecs::PostUpdate)
@@ -317,11 +341,6 @@ int main()
                 bullet.set<Velocity>({
                     dx * bulletSpeed,
                     dy * bulletSpeed
-                });
-
-                bullet.set<Bullet>({
-                    1.f,
-                    20.f
                 });
             } });
 
@@ -391,7 +410,7 @@ int main()
               {
     float width = circle.radius * 2.f;
 
-    float ratio = character.health / 120.f;
+    float ratio = character.health / character.maxHealth;
 
     DrawRectangle(
         pos.x - width / 2,
@@ -417,11 +436,11 @@ int main()
 
         auto state = &world.get<GameState>();
 
-        if (!state->gameOver)
+        if (!state->gameOver && !state->gameWon)
         {
             world.progress(GetFrameTime());
         }
-        else
+        else if (state->gameOver)
         {
             DrawText(
                 "GAME OVER",
@@ -429,6 +448,15 @@ int main()
                 GetScreenHeight() / 2 - 20,
                 40,
                 RED);
+        }
+        else if (state->gameWon)
+        {
+            DrawText(
+                "YOU WIN",
+                GetScreenWidth() / 2 - 90,
+                GetScreenHeight() / 2 - 20,
+                40,
+                GREEN);
         }
 
         DrawFPS(10, 10);

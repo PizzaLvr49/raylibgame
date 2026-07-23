@@ -9,6 +9,7 @@ prefab CircleEnemy {
     Character: {
         speed: 120
         health: 25
+        maxHealth: 25
     }
     Velocity: {
         x: 0
@@ -27,6 +28,7 @@ prefab TankEnemy {
     Character: {
         speed: 60
         health: 120
+        maxHealth: 120
     }
     Velocity: {
         x: 0
@@ -45,6 +47,7 @@ prefab CirclePlayer {
     Character: {
         speed: 180
         health: 100
+        maxHealth: 100
     }
     Velocity: {
         x: 0
