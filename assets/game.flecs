@@ -73,15 +73,12 @@ prefab BulletPrefab {
     }
 }
 
-// Center of 1920x1080 screen
 Player Bob : CirclePlayer {
     Position: {
         x: 960
         y: 540
     }
 }
-
-// Standard Red Enemies
 "Enemy 1" : CircleEnemy {
     Enemy
     Position: { x: 400, y: 200 }
@@ -122,7 +119,6 @@ Player Bob : CirclePlayer {
     Position: { x: 1720, y: 540 }
 }
 
-// Tank Enemies
 "Tank 1" : TankEnemy {
     Enemy
     Position: { x: 150, y: 150 }
