@@ -1,0 +1,141 @@
+prefab CircleEnemy {
+    CircleRenderer: {
+        radius: 12
+        r: 230
+        g: 41
+        b: 55
+        a: 255
+    }
+    Character: {
+        speed: 120
+        health: 25
+    }
+    Velocity: {
+        x: 0
+        y: 0
+    }
+}
+
+prefab TankEnemy {
+    CircleRenderer: {
+        radius: 22
+        r: 210
+        g: 105
+        b: 30
+        a: 255
+    }
+    Character: {
+        speed: 60
+        health: 120
+    }
+    Velocity: {
+        x: 0
+        y: 0
+    }
+}
+
+prefab CirclePlayer {
+    CircleRenderer: {
+        radius: 14
+        r: 0
+        g: 121
+        b: 241
+        a: 255
+    }
+    Character: {
+        speed: 180
+        health: 100
+    }
+    Velocity: {
+        x: 0
+        y: 0
+    }
+}
+
+prefab BulletPrefab {
+    CircleRenderer: {
+        radius: 5
+        r: 255
+        g: 220
+        b: 0
+        a: 255
+    }
+    Velocity: {
+        x: 0
+        y: 0
+    }
+    Bullet: {
+        damage: 10
+        lifetime: 2
+    }
+}
+
+// Center of 1920x1080 screen
+Player Bob : CirclePlayer {
+    Position: {
+        x: 960
+        y: 540
+    }
+}
+
+// Standard Red Enemies
+"Enemy 1" : CircleEnemy {
+    Enemy
+    Position: { x: 400, y: 200 }
+}
+
+"Enemy 2" : CircleEnemy {
+    Enemy
+    Position: { x: 1520, y: 200 }
+}
+
+"Enemy 3" : CircleEnemy {
+    Enemy
+    Position: { x: 400, y: 880 }
+}
+
+"Enemy 4" : CircleEnemy {
+    Enemy
+    Position: { x: 1520, y: 880 }
+}
+
+"Enemy 5" : CircleEnemy {
+    Enemy
+    Position: { x: 960, y: 150 }
+}
+
+"Enemy 6" : CircleEnemy {
+    Enemy
+    Position: { x: 960, y: 930 }
+}
+
+"Enemy 7" : CircleEnemy {
+    Enemy
+    Position: { x: 200, y: 540 }
+}
+
+"Enemy 8" : CircleEnemy {
+    Enemy
+    Position: { x: 1720, y: 540 }
+}
+
+// Tank Enemies
+"Tank 1" : TankEnemy {
+    Enemy
+    Position: { x: 150, y: 150 }
+}
+
+"Tank 2" : TankEnemy {
+    Enemy
+    Position: { x: 1770, y: 150 }
+}
+
+"Tank 3" : TankEnemy {
+    Enemy
+    Position: { x: 150, y: 930 }
+}
+
+"Tank 4" : TankEnemy {
+    Enemy
+    Position: { x: 1770, y: 930 }
+}

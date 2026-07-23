@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create build directory",
+            "type": "shell",
+            "command": "New-Item -ItemType Directory -Force -Path build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build flecs.c",
+            "type": "shell",
+            "dependsOn": "Create build directory",
+            "command": "gcc",
+            "args": [
+                "-x",
+                "c",
+                "-std=c99",
+                "-c",
+                "${workspaceFolder}/include/flecs.c",
+                "-I",
+                "${workspaceFolder}/include",
+                "-o",
+                "${workspaceFolder}/build/flecs.o"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build game",
+            "type": "shell",
+            "dependsOn": "Build flecs.c",
+            "command": "g++",
+            "args": [
+                "-std=c++26",
+                "-Wall",
+                // "-mwindows",
+                "-g",
+                "${workspaceFolder}/main.cpp",
+                "${workspaceFolder}/build/flecs.o",
+                "-I",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/libraylib.a",
+                "-lopengl32",
+                "-lgdi32",
+                "-lwinmm",
+                "-lws2_32",
+                "-ldbghelp",
+                "-o",
+                "${workspaceFolder}/build/main.exe"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
